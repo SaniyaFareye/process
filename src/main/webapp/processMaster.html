@@ -1,0 +1,122 @@
+
+<div   ng-init="show='view'">
+    <div class="btn-group" role="group" >
+        <button ng-click="show='view'" type="button" class="btn btn-default">View</button>
+        <button ng-click="show='add'" type="button" class="btn btn-default">Add Configuration</button>
+    </div>
+
+    <div class="view inventory" ng-if="show=='add'">
+        <div class="bg-extended">
+            <div class="align-vertical-center">
+
+                <div class="container">
+
+                    <div class="row">
+
+                        <div class="well  col-sm-12">
+
+                            <div class="well-heading well-primary">
+                                <h1>Add Process Configuration</h1>
+                            </div>
+
+                            <form class="well-body">
+
+                               <div class="form-group label-floating">
+                                    <label class="control-label" for="processName">Login</label>
+                                    <input id="processName" type="text" class="form-control" ng-model="processInfo.processName" required="required"/>
+                                </div>
+
+                                <button class="btn  btn-primary " ng-click="addProcess()">
+                                    Task/Condition
+                                </button>
+
+                                <!--generating dynamic form-->
+                                <div class="form-group label-floating">
+                                    <fieldset data-ng-repeat="field in choiceSet.choices track by $index">
+                                        <div  class="col-md-2">
+                                            <select ng-disabled=" choiceSet.choices[$index].code=='start' || choiceSet.choices[$index].code=='end' " class="form-control" ng-model="choiceSet.choices[$index].type" ng-options="x for x in task">
+                                                <option value="">Task/Condition</option>
+                                            </select>
+                                        </div>
+                                        <div ng-if="choiceSet.choices[$index].type=='Task'" class="input-append">
+                                        <div class="col-md-2">
+                                            <input type="text" class="form-control" ng-model=" choiceSet.choices[$index].title"
+                                           required="required" placeholder="Task Title"/>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <input ng-disabled=" choiceSet.choices[$index].code=='start' || choiceSet.choices[$index].code=='end' " type="text" class="form-control" ng-model=" choiceSet.choices[$index].code"
+                                                   required="required" placeholder="Task Code(Unique)"/>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                        <select ng-disabled="  choiceSet.choices[$index].code=='end' " class="form-control" ng-model="choiceSet.choices[$index].nextTrueCondition"
+                                                ng-options="x.code as (x.title+'('+x.code+')') for x in choiceSet.choices">
+                                            <option value="">Next True Condition</option>
+                                        </select>
+                                        </div>
+                                        </div>
+
+                                        <div ng-if="choiceSet.choices[$index].type=='Condition'" class="input-append">
+                                            <div class="col-md-2">
+                                                <input type="text" class="form-control" ng-model=" choiceSet.choices[$index].title"
+                                                       required="required" placeholder="Task Title"/>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <input type="text" class="form-control" ng-model=" choiceSet.choices[$index].code"
+                                                       required="required" placeholder="Task Code(Unique)"/>
+                                            </div>
+
+                                            <div class="col-md-2">
+                                                <input type="text" class="form-control" ng-model=" choiceSet.choices[$index].conditionExpression"
+                                                       required="required" placeholder="Condition Expression"/>
+                                            </div>
+
+                                            <div class="col-md-2">
+                                                <select class="form-control" ng-model="choiceSet.choices[$index].nextTrueCondition" ng-options="x as (x.title+'('+x.code+')') for x in choiceSet.choices">
+                                                    <option value="">Next True Condition</option>
+                                                </select>
+                                            </div>
+
+                                                <div class="col-md-2">
+                                                    <select class="form-control" ng-model="choiceSet.choices[$index].nextFalseCondition" ng-options="x as (x.title+'('+x.code+')') for x in choiceSet.choices">
+                                                        <option value="">Next False Condition</option>
+                                                    </select>
+                                                </div>
+
+                                        </div>
+                                        <div class="col-md-1 ">
+                                        <button ng-disabled=" choiceSet.choices[$index].code=='start' || choiceSet.choices[$index].code=='end' " class="btn " ng-click="removeProcess($index)">
+                                            Del
+                                        </button>
+                                        </div>
+
+
+                                    </fieldset>
+                                </div>
+
+                                <br/>
+
+                                <div class="col-sm-offset-3 col-sm-6">
+                                    <button class="btn btn-lg btn-primary btn-block" ng-click="submitProcess(processInfo)">
+                                        Submit Process
+                                    </button>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <div class="add" ng-if="show=='view'">
+
+
+    </div>
+
+
+</div>
