@@ -50,7 +50,7 @@
 
                                         <div class="col-md-2">
                                         <select ng-disabled="  choiceSet.choices[$index].code=='end' " class="form-control" ng-model="choiceSet.choices[$index].nextTrueCondition"
-                                                ng-options="x.code as (x.title+'('+x.code+')') for x in choiceSet.choices">
+                                                ng-options="x.title+'('+x.code+')' as (x.title+'('+x.code+')') for x in choiceSet.choices">
                                             <option value="">Next True Condition</option>
                                         </select>
                                         </div>
@@ -72,13 +72,13 @@
                                             </div>
 
                                             <div class="col-md-2">
-                                                <select class="form-control" ng-model="choiceSet.choices[$index].nextTrueCondition" ng-options="x as (x.title+'('+x.code+')') for x in choiceSet.choices">
+                                                <select class="form-control" ng-model="choiceSet.choices[$index].nextTrueCondition" ng-options="x.title+'('+x.code+')' as (x.title+'('+x.code+')') for x in choiceSet.choices">
                                                     <option value="">Next True Condition</option>
                                                 </select>
                                             </div>
 
                                                 <div class="col-md-2">
-                                                    <select class="form-control" ng-model="choiceSet.choices[$index].nextFalseCondition" ng-options="x as (x.title+'('+x.code+')') for x in choiceSet.choices">
+                                                    <select class="form-control" ng-model="choiceSet.choices[$index].nextFalseCondition" ng-options="x.title+'('+x.code+')' as (x.title+'('+x.code+')') for x in choiceSet.choices">
                                                         <option value="">Next False Condition</option>
                                                     </select>
                                                 </div>

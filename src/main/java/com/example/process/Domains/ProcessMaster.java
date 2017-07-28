@@ -16,10 +16,10 @@ public class ProcessMaster {
     @Column(name = "process_master_id")
     private Long processMasterID;
 
-    @Column(name="process_name", nullable = false)
+    @Column(name="process_name")
     private String processName;
 
-    @Column (columnDefinition ="text",nullable = false)
+    @Column (columnDefinition ="text")
     private String process;
 
     public ProcessMaster() {

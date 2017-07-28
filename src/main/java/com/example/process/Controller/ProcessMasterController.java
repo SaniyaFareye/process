@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * Created by xplode on 27/7/17.
  */
@@ -24,9 +26,17 @@ public class ProcessMasterController {
 
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     public ResponseEntity add(@RequestBody ProcessMasterDTO processMasterDTO){
-
         try{
-            return processMasterService.getAll(processMasterDTO);
+            return processMasterService.saveAll(processMasterDTO);
+        }catch(Exception e){
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @RequestMapping(value = "/all",method = RequestMethod.GET)
+    public ResponseEntity all(){
+        try{
+            return processMasterService.getAll();
         }catch(Exception e){
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
