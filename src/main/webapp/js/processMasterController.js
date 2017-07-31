@@ -26,6 +26,19 @@ angular.module('app')
                 $scope.choiceSet.choices.splice(z,1);
             };
 
+//            var init=function(){
+//                                 view();
+//                                 }
+//
+//                                 init();
+//
+//                                function view(){
+//                                var url="/process/all";
+//                                $http.get(url).then(function(response){
+//                                $scope.process=response.data;
+//                                  });
+//                                }
+
             $scope.submitProcess=function(processInfo){
                 for(var i=0;i<$scope.choiceSet.choices.length;i++){
                     if($scope.choiceSet.choices[i].type=='Task'){

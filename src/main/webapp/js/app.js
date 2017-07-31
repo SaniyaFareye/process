@@ -7,6 +7,10 @@ app.config(['$routeProvider',function ($routeProvider){
                         templateUrl : "/processMaster.html",
                         controller:"processMasterController"
                   })
+              .when("/jobs", {
+                       templateUrl : "/jobMaster.html",
+                       controller:"processController"
+                                    })
 
 
             }]);

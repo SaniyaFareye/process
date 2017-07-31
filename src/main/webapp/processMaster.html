@@ -5,7 +5,7 @@
         <button ng-click="show='add'" type="button" class="btn btn-default">Add Configuration</button>
     </div>
 
-    <div class="view inventory" ng-if="show=='add'">
+    <div class="add process flow" ng-if="show=='add'">
         <div class="bg-extended">
             <div class="align-vertical-center">
 
@@ -22,7 +22,7 @@
                             <form class="well-body">
 
                                <div class="form-group label-floating">
-                                    <label class="control-label" for="processName">Login</label>
+                                    <label class="control-label" for="processName">Process name</label>
                                     <input id="processName" type="text" class="form-control" ng-model="processInfo.processName" required="required"/>
                                 </div>
 
@@ -54,6 +54,12 @@
                                             <option value="">Next True Condition</option>
                                         </select>
                                         </div>
+                                            <div class="col-md-2">
+                                                <select ng-disabled="  choiceSet.choices[$index].code=='end' "  class="form-control" ng-model="choiceSet.choices[$index].nextFalseCondition" ng-options="x.title+'('+x.code+')' as (x.title+'('+x.code+')') for x in choiceSet.choices">
+                                                    <option value="">Next False Condition</option>
+                                                </select>
+                                            </div>
+
                                         </div>
 
                                         <div ng-if="choiceSet.choices[$index].type=='Condition'" class="input-append">
@@ -113,10 +119,31 @@
 
 
 
-    <div class="add" ng-if="show=='view'">
+    <!--<div class="view" ng-if="show=='view'">-->
+        <!--<table class="table">-->
+            <!--<thead>-->
+            <!--<tr>-->
+                <!--<th>Process Flow</th>-->
+                <!--<th style="width:90px"></th>-->
+            <!--</tr>-->
+            <!--</thead>-->
+            <!--<tbody>-->
+            <!--<tr ng-repeat ="processDetail in process">-->
+                <!--<td>{{processDetail.processName}}</td>-->
+
+                <!--<td>-->
+                    <!--<div>-->
+                        <!--<button class="btn btn-danger" ng-click="add(inventoryDetail);" >Edit</button>-->
+                        <!--<button class="btn btn-danger" ng-click="delete(inventoryDetail.id);">Delete</button>-->
+                    <!--</div>-->
+
+                <!--</td>-->
+            <!--</tr>-->
+            <!--</tbody>-->
+        <!--</table>-->
 
 
-    </div>
+    <!--</div>-->
 
 
 </div>

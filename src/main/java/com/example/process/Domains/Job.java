@@ -1,6 +1,7 @@
 package com.example.process.Domains;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.joda.time.DateTime;
 
 import javax.persistence.*;
 
@@ -16,8 +17,11 @@ public class Job {
     @Column(name="job_id")
     private Long jobId;
 
-    @Column(name="job_name")
-    private String jobName;
+    @Column(name = "created_date")
+    private DateTime createdDate;
+
+    @Column(name="current_flow")
+    private String currentFlow;
 
     @ManyToOne
     @JoinColumn(name="processMasterID",insertable=true,updatable=true,nullable = false)
@@ -34,12 +38,20 @@ public class Job {
         this.jobId = jobId;
     }
 
-    public String getJobName() {
-        return jobName;
+    public DateTime getCreatedDate() {
+        return createdDate;
     }
 
-    public void setJobName(String jobName) {
-        this.jobName = jobName;
+    public void setCreatedDate(DateTime createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public String getCurrentFlow() {
+        return currentFlow;
+    }
+
+    public void setCurrentFlow(String currentFlow) {
+        this.currentFlow = currentFlow;
     }
 
     public ProcessMaster getProcessMaster() {
