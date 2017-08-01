@@ -27,12 +27,17 @@ angular.module('app')
              $scope.proc=response.data;
              });
 
-             $scope.add=function(){
-                     $scope.showModal = true;
-             }
-             $scope.cancel = function() {
-               $scope.showModal = false;
-             };
+            $scope.addProc=function(processId,addInfo){
+
+            $http({
+            "url" : "/job/currentFlow/",
+            "method" : "POST",
+            "params" : {'processMasterID':processId,'crnNo':addInfo.crnNo}
+            }).
+            then(function(response){
+                    $scope.currflow=response.data;
+                });
+            }
 
 }
 

@@ -5,12 +5,21 @@ package com.example.process.DTO;
  */
 public class ProcessFlowDTO {
     private String title;
+    private String type;
     private String code;
     private String conditionExpression;
     private String nextTrueCondition;
     private String nextFalseCondition;
 
     public ProcessFlowDTO() {
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getTitle() {

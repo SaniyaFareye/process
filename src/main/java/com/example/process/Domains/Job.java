@@ -17,6 +17,9 @@ public class Job {
     @Column(name="job_id")
     private Long jobId;
 
+    @Column(name="crn_no")
+    private String  crnNo;
+
     @Column(name = "created_date")
     private DateTime createdDate;
 
@@ -28,6 +31,14 @@ public class Job {
     private ProcessMaster processMaster;
 
     public Job() {
+    }
+
+    public String getCrnNo() {
+        return crnNo;
+    }
+
+    public void setCrnNo(String crnNo) {
+        this.crnNo = crnNo;
     }
 
     public Long getJobId() {

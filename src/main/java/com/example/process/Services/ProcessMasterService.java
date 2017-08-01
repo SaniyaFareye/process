@@ -55,7 +55,8 @@ public class ProcessMasterService {
              pf.setCode(pfDto.getCode());
              pf.setConditionExpression(pfDto.getConditionExpression());
              pf.setTitle(pfDto.getTitle());
-             pf.setNextFalseCondition(pfDto.getNextFalseCondition());
+             pf.setNextTrueCondition(pfDto.getNextTrueCondition());
+             pf.setType(pfDto.getType());
              pf.setNextFalseCondition(pfDto.getNextFalseCondition());
              hash.put(entry.getKey(),pf);
 

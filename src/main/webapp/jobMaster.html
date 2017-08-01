@@ -29,11 +29,10 @@
     <div class="add process" ng-if="draft.show=='add'">
 
         <div class="btn-group" role="group" >
-            <button ng-click=add() type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add Process</button>
-
+            <button  type="button"  class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add Process</button>
         </div>
         <div class="row">
-            <div class="col-md-2">
+            <div class="col-md-2">a
                 <input type="text" class="form-control" ng-model=" choiceSet.choices[$index].title"
                        required="required" placeholder="Start Date"/>
             </div>
@@ -43,7 +42,7 @@
                        required="required" placeholder="End Date"/>
             </div>
             <div class="col-md-2">
-                <input type="text" class="form-control" ng-model=" choiceSet.choices[$index].title"
+                <input type="text" class="form-control" ng-model="choiceSet.choices[$index].title"
                        required="required" placeholder="Current Flow"/>
             </div>
             <td>
@@ -88,24 +87,25 @@
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Modal Header</h4>
+                        <button  type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Add process Details</h4>
                     </div>
                     <div class="modal-body">
-                        <p>Some text in the modal.</p>
+                        <div class="form-group label-floating">
+                            <label class="control-label" for="crn_no">CRN NO(unique)</label>
+                            <input id="crn_no" type="text" class="form-control" ng-model="addInfo.crnNo" required="required"/>
+                        </div>
+
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="addProc(draft.processMasterId,addInfo)">Save</button>
                     </div>
                 </div>
 
             </div>
         </div>
-
-
-
-
-
 
     </div>
 </div>
