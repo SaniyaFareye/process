@@ -21,7 +21,7 @@ public class JobController {
         try{
             return jobService.getAll();
         }catch(Exception e){
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity("no data",    HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -31,6 +31,7 @@ public class JobController {
         try{
             return jobService.getCurrentFlow(processMasterID,crnNo);
         }catch(Exception e){
+            e.printStackTrace();
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
     }

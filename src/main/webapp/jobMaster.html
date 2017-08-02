@@ -32,7 +32,7 @@
             <button  type="button"  class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add Process</button>
         </div>
         <div class="row">
-            <div class="col-md-2">a
+            <div class="col-md-2">
                 <input type="text" class="form-control" ng-model=" choiceSet.choices[$index].title"
                        required="required" placeholder="Start Date"/>
             </div>
@@ -56,24 +56,24 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <th>Process</th>
+                    <th>CRN No</th>
                     <th>currentFlow</th>
-                    <th>Process</th>
+                    <th>Created Date</th>
                     <th style="width:90px"></th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr ng-repeat ="procDetail in proc">
-                    <td>{{procDetail.processName}}</td>
-                    <td>{{procDetail.createdDate}}</td>
+                    <td>{{procDetail.crnNo}}</td>
                     <td>{{procDetail.currentFlow}}</td>
+                    <td>{{procDetail.createdDate}}</td>
 
                     <td>
 
-                            <select  class="form-control" ng-model="choiceSet.choices[$index].nextTrueCondition"
-                                    ng-options="x.title+'('+x.code+')' as (x.title+'('+x.code+')') for x in choiceSet.choices">
-                                <option value="">Next True Condition</option>
-                            </select>
+                        <button type="button" class="btn btn-primary" ng-click="success(procDetail.crnNo)" >Success</button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-primary"  ng-click="fail(procDetail.crnNo)">Fail</button>
 
                     </td>
                 </tr>

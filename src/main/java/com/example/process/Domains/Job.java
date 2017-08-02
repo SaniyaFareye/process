@@ -1,9 +1,14 @@
 package com.example.process.Domains;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 
 import javax.persistence.*;
+import java.sql.Time;
+
+import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * Created by xplode on 27/7/17.
@@ -20,8 +25,11 @@ public class Job {
     @Column(name="crn_no")
     private String  crnNo;
 
-    @Column(name = "created_date")
-    private DateTime createdDate;
+//    @Column(name = "created_date")
+//    private DateTime createdDate;
+//        @Column(name = "created_date", columnDefinition = "TIMESTAMP")
+//        @Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
+        private Timestamp createdDate;
 
     @Column(name="current_flow")
     private String currentFlow;
@@ -49,11 +57,20 @@ public class Job {
         this.jobId = jobId;
     }
 
-    public DateTime getCreatedDate() {
+//    public Timestamp getCreatedDate() {
+//        return createdDate;
+//    }
+//
+//    public void setCreatedDate(Timestamp createdDate) {
+//        this.createdDate = createdDate;
+//    }
+
+
+    public Timestamp getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(DateTime createdDate) {
+    public void setCreatedDate(Timestamp createdDate) {
         this.createdDate = createdDate;
     }
 

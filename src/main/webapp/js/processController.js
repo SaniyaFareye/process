@@ -1,6 +1,6 @@
 angular.module('app')
 .controller("processController", function($scope,$http){
-
+            $scope.action=["Success","Failure"];
             $scope.draft={
                 show : 'view',
                 processMasterId : -1
@@ -22,10 +22,15 @@ angular.module('app')
 
              $scope.render=function(id){
              $scope.draft.processMasterId=id;
-              var url="/job/all";
-             $http.get(url).then(function(response){
-             $scope.proc=response.data;
-             });
+             viewjob();
+
+            }
+              function viewjob(){
+                var url="/job/all";
+                             $http.get(url).then(function(response){
+                             $scope.proc=response.data;
+                             });
+              }
 
             $scope.addProc=function(processId,addInfo){
 
@@ -35,11 +40,20 @@ angular.module('app')
             "params" : {'processMasterID':processId,'crnNo':addInfo.crnNo}
             }).
             then(function(response){
-                    $scope.currflow=response.data;
+                    console.log(response.data);
+                    viewjob();
+                    $scope.draft.show="add";
                 });
             }
 
-}
+
+            $scope.success=function(crn){
+
+            }
+
+             $scope.fail=function(crn){
+
+            }
 
 
 });
