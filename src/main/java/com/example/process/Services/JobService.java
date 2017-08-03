@@ -39,8 +39,8 @@ public class JobService {
     ProcessMasterRepository processMasterRepository;
 
 
-    public ResponseEntity getAll(){
-        List<Job> job=jobRepository.findAll();
+    public ResponseEntity getAll(Long id){
+        List<Job> job=jobRepository.findById(id);
 
 
         if(job==null){
@@ -65,17 +65,10 @@ public class JobService {
     public ResponseEntity getCurrentFlow(Long id,String crnNo){
         ProcessMaster processMaster=processMasterRepository.findById(id);
 
-        HashMap<String, ProcessFlowDTO>  map=new HashMap<String,ProcessFlowDTO>();
-        ObjectMapper objectMapper= new ObjectMapper();
-        try {
-            map=objectMapper.readValue(processMaster.getProcess(), new TypeReference<HashMap<String,ProcessFlowDTO>>() {});
-            System.out.print(map);
-        }catch (IOException io){
-
-        }
+        HashMap<String, ProcessFlowDTO>  map= stringToHashMap(processMaster.getProcess());
 
         String type="";
-        String nextTrueCond= getNextTrueCondition("start",map,type);
+        String nextTrueCond= getCondition("start",map,type);
         System.out.print(nextTrueCond);
 
         DateTime dt = new DateTime();
@@ -91,6 +84,7 @@ public class JobService {
         job.setCurrentFlow(nextTrueCond);
         job.setProcessMaster(processMaster);
 
+
         Job job1=jobRepository.save(job);
         System.out.print(job1);
         if(job1!=null){
@@ -100,28 +94,70 @@ public class JobService {
 
     }
 
-    String getNextTrueCondition(String code,HashMap<String,ProcessFlowDTO> map,String type){
-        while(!type.equals("Task") ) {
-            if (!code.equals("end")){
+    String getCondition(String code,HashMap<String,ProcessFlowDTO> map,String type){
+
+            while(!type.equals("Task") && !code.equals("end")) {
+
                 ProcessFlowDTO value = map.get(code);
                  ProcessFlowDTO value1 = new ProcessFlowDTO();
                 code = value.getNextTrueCondition();
 
                   value1 = map.get(code);
+                  type=value1.getType();
+                  if(type.equals("Condition")) {
+                      String conditionExpression = value1.getConditionExpression();
+                      if (conditionExpression.equals("true")) {
+                          code = value1.getNextTrueCondition();
+                      } else {
+                          code = value1.getNextFalseCondition();
+                      }
 
-                    type=value1.getType();
-            }
+
+                  }
 
         }
+
         return code;
     }
 
 
+    public HashMap<String, ProcessFlowDTO> stringToHashMap(String process){
+        HashMap<String, ProcessFlowDTO>  map=new HashMap<String ,ProcessFlowDTO>();
+
+        ObjectMapper objectMapper= new ObjectMapper();
+        try {
+             map=objectMapper.readValue(process, new TypeReference<HashMap<String,ProcessFlowDTO>>() {});
+            System.out.print(map);
+        }catch (IOException io){
+
+        }
+
+        return map;
+
+    }
+
+    public ResponseEntity getNextState(String crnNo,String status) {
+        Job job = jobRepository.findByCrnNo(crnNo);
+        ProcessMaster processMaster = job.getProcessMaster();
+        HashMap<String, ProcessFlowDTO> map = stringToHashMap(processMaster.getProcess());
+        String currentFlow = job.getCurrentFlow();
+        String type = "";
+        String nextTrueCond;
+        if (status.equals("success")) {
+            nextTrueCond = getCondition(currentFlow, map, type);
+        } else {
+            nextTrueCond = "end";
+
+        }
+        job.setCurrentFlow(nextTrueCond);
+
+        Job job1 = jobRepository.save(job);
+        System.out.print(job1);
+        if (job1 != null) {
+            return new ResponseEntity(HttpStatus.OK);
+        }
+        return new ResponseEntity("no data", HttpStatus.NO_CONTENT);
 
 
-
-
-
-
-
+    }
 }

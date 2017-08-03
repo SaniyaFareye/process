@@ -16,10 +16,10 @@ public class JobController {
     @Autowired
     private JobService jobService;
 
-    @RequestMapping(value = "/all",method = RequestMethod.GET)
-    public ResponseEntity all(){
+    @RequestMapping(value = "/all",method = RequestMethod.POST)
+    public ResponseEntity all(@RequestParam ("processMasterID") Long processMasterID){
         try{
-            return jobService.getAll();
+            return jobService.getAll(processMasterID);
         }catch(Exception e){
             return new ResponseEntity("no data",    HttpStatus.BAD_REQUEST);
         }
@@ -30,6 +30,17 @@ public class JobController {
                                          @RequestParam("crnNo") String crnNo){
         try{
             return jobService.getCurrentFlow(processMasterID,crnNo);
+        }catch(Exception e){
+            e.printStackTrace();
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @RequestMapping(value="/nexState",method =RequestMethod.POST)
+    public ResponseEntity getNextState(@RequestParam("crnNo")String crnNo,@RequestParam("status") String status){
+
+        try{
+            return jobService.getNextState(crnNo,status);
         }catch(Exception e){
             e.printStackTrace();
             return new ResponseEntity(HttpStatus.BAD_REQUEST);

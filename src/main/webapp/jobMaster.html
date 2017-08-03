@@ -33,21 +33,23 @@
         </div>
         <div class="row">
             <div class="col-md-2">
-                <input type="text" class="form-control" ng-model=" choiceSet.choices[$index].title"
-                       required="required" placeholder="Start Date"/>
+                <input type="text" class=" form-control" ng-model=" datepicker.date" data-date-format="yyyy-MM-dd"
+                       data-autoclose="1" name="date2 data-max-date="{{filter.endDate}}"   placeholder="From Date" bs-datepicker >
             </div>
 
             <div class="col-md-2">
-                <input type="text" class="form-control" ng-model=" choiceSet.choices[$index].title"
-                       required="required" placeholder="End Date"/>
+                <input type="text" class="form-control" ng-model=" filter.endDate" data-date-format="yyyy-MM-dd"
+                       data-min-date="{{filter.startDate}}"   placeholder="Till Date" bs-datepicker>
             </div>
             <div class="col-md-2">
-                <input type="text" class="form-control" ng-model="choiceSet.choices[$index].title"
-                       required="required" placeholder="Current Flow"/>
+                <select  class="form-control" ng-model="filter.currentFlow"
+                        ng-options="x for x in codeList">
+                    <option value="">Current Flow</option>
+                </select>
             </div>
             <td>
                 <div>
-                    <button class="btn " ng-click="search()" >Search </button>
+                    <button class="btn " ng-click="search(filter)" >Search </button>
                 </div>
             </td>
         </div>
@@ -70,10 +72,10 @@
 
                     <td>
 
-                        <button type="button" class="btn btn-primary" ng-click="success(procDetail.crnNo)" >Success</button>
+                        <button ng-disabled="procDetail.currentFlow=='end'" type="button" class="btn btn-primary" ng-click="success(procDetail.crnNo)" >Success</button>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-primary"  ng-click="fail(procDetail.crnNo)">Fail</button>
+                        <button ng-disabled="procDetail.currentFlow=='end'" type="button" class="btn btn-primary"  ng-click="fail(procDetail.crnNo)">Fail</button>
 
                     </td>
                 </tr>

@@ -4,12 +4,16 @@ import com.example.process.DTO.ProcessFlowDTO;
 import com.example.process.DTO.ProcessMasterDTO;
 import com.example.process.Domains.ProcessMaster;
 import com.example.process.Repository.ProcessMasterRepository;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,10 +74,35 @@ public class ProcessMasterService {
             return new ResponseEntity("Database Empty",HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity(processMasters,HttpStatus.OK);
-
-
-
     }
 
+    public ResponseEntity getCodeList(Long id){
+
+        ProcessMaster processMaster=processMasterRepository.findById(id);
+        List<String> codeList=new ArrayList<>();
+        HashMap<String, ProcessFlowDTO>  map= stringToHashMap(processMaster.getProcess());
+
+        for (Map.Entry<String , ProcessFlowDTO> entry : map.entrySet()) {
+            if(!entry.getKey().equals("start") && !entry.getKey().equals("end")) {
+                codeList.add(entry.getKey());
+            }
+        }
+        return new ResponseEntity(codeList,HttpStatus.OK);
+    }
+
+    public HashMap<String, ProcessFlowDTO> stringToHashMap(String process){
+        HashMap<String, ProcessFlowDTO>  map=new HashMap<String ,ProcessFlowDTO>();
+
+        ObjectMapper objectMapper= new ObjectMapper();
+        try {
+            map=objectMapper.readValue(process, new TypeReference<HashMap<String,ProcessFlowDTO>>() {});
+            System.out.print(map);
+        }catch (IOException io){
+
+        }
+
+        return map;
+
+    }
 
 }
