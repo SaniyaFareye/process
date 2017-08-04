@@ -37,7 +37,7 @@ public class JobController {
     }
 
     @RequestMapping(value="/nexState",method =RequestMethod.POST)
-    public ResponseEntity getNextState(@RequestParam("crnNo")String crnNo,@RequestParam("status") String status){
+    public ResponseEntity getNextState(@RequestParam("crnNo")String crnNo,@RequestParam("status") String status) {
 
         try{
             return jobService.getNextState(crnNo,status);

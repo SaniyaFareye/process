@@ -1,15 +1,13 @@
 angular.module('app')
-.controller("processController", function($scope,$http){
-            $scope.datepicker = {date: Date.UTC(1986, 1, 22)};
-//            $('.datepick').datepicker({
-//                format: 'yyyy-mm-dd',
-//
-//            });
+.controller("processController", function($scope,$http,$timeout){
+            $scope.var1 = '12-07-2013';
             $scope.action=["Success","Failure"];
+            $scope.dataFilter='false';
             $scope.draft={
                 show : 'view',
                 processMasterId : -1
             }
+            var today=new Date();
 
 
             var init=function(){
@@ -26,6 +24,33 @@ angular.module('app')
                                 }
 
              $scope.render=function(id){
+              $scope.fil
+
+              ter={
+              startDate: today.toISOString().substr(0,10);
+
+                         }
+                         console.log($scope.filter.startDate);
+             $(function () {
+                           $("#datepicker").datepicker({
+                                 autoclose: true,
+                                 todayHighlight: true
+                           }).on('changeDate', function(event) {
+                                 $scope.filter.startDate=event.format();
+                             });
+                            });
+
+            $(function () {
+                           $("#datepick").datepicker({
+                                 autoclose: true,
+                                 todayHighlight: true
+                           }).on('changeDate', function(event) {
+                                 $scope.endDate=event.format();
+                             });
+                            });
+             $scope.currFlow=null;
+
+
              $scope.draft.processMasterId=id;
 
               $http({
@@ -39,6 +64,24 @@ angular.module('app')
                           });
              viewjob(id);
 
+            }
+
+            $scope.search=function(fil){
+            console.log($scope.startDate);
+            console.log($scope.endDate);
+            console.log($scope.currFlow);
+
+            $http({
+                          "url" : "/process/filterData/",
+                          "method" : "POST",
+                          "params" : {'processMasterID':$scope.draft.processMasterId,'startDate':$scope.startDate,
+                                       'endDate':$scope.filter.endDate, 'currentFlow':filter.currentFlow}
+                          }).
+                          then(function(response){
+                           $scope.filerData=response.data;
+
+
+                          });
             }
               function viewjob(id){
 

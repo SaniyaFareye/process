@@ -1,7 +1,6 @@
-<div   >
+<div>
     <div class="btn-group" role="group" >
         <button ng-click="draft.show='view'" type="button" class="btn btn-default">View</button>
-
     </div>
 
     <div class="view" ng-if="draft.show=='view'">
@@ -33,23 +32,25 @@
         </div>
         <div class="row">
             <div class="col-md-2">
-                <input type="text" class=" form-control" ng-model=" datepicker.date" data-date-format="yyyy-MM-dd"
-                       data-autoclose="1" name="date2 data-max-date="{{filter.endDate}}"   placeholder="From Date" bs-datepicker >
+
+                        <input  type="text" id="datepicker" class="form-control" data-max-date="2017-08-05"  ng-model="filter.startDate"data-date-format="yyyy-mm-dd" placeholder="From Date">
+
             </div>
 
             <div class="col-md-2">
-                <input type="text" class="form-control" ng-model=" filter.endDate" data-date-format="yyyy-MM-dd"
-                       data-min-date="{{filter.startDate}}"   placeholder="Till Date" bs-datepicker>
+                <input  type="text" id="datepick" class="form-control" data-max-date="2017-08-05"  data-date-format="yyyy-mm-dd" placeholder="Till Date">
+
             </div>
             <div class="col-md-2">
-                <select  class="form-control" ng-model="filter.currentFlow"
+                <select  class="form-control" ng-model="currFlow"
                         ng-options="x for x in codeList">
                     <option value="">Current Flow</option>
                 </select>
             </div>
             <td>
                 <div>
-                    <button class="btn " ng-click="search(filter)" >Search </button>
+                    {{startDate}}>>
+                    <button class="btn " ng-click="search()" >Search </button>
                 </div>
             </td>
         </div>

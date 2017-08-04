@@ -66,9 +66,7 @@ public class JobService {
         ProcessMaster processMaster=processMasterRepository.findById(id);
 
         HashMap<String, ProcessFlowDTO>  map= stringToHashMap(processMaster.getProcess());
-
-        String type="";
-        String nextTrueCond= getCondition("start",map,type);
+        String nextTrueCond= getCondition("start",map,true);
         System.out.print(nextTrueCond);
 
         DateTime dt = new DateTime();
@@ -94,29 +92,25 @@ public class JobService {
 
     }
 
-    String getCondition(String code,HashMap<String,ProcessFlowDTO> map,String type){
-
-            while(!type.equals("Task") && !code.equals("end")) {
-
-                ProcessFlowDTO value = map.get(code);
-                 ProcessFlowDTO value1 = new ProcessFlowDTO();
-                code = value.getNextTrueCondition();
-
-                  value1 = map.get(code);
-                  type=value1.getType();
-                  if(type.equals("Condition")) {
-                      String conditionExpression = value1.getConditionExpression();
-                      if (conditionExpression.equals("true")) {
-                          code = value1.getNextTrueCondition();
-                      } else {
-                          code = value1.getNextFalseCondition();
-                      }
-
-
-                  }
-
+    String getCondition(String code,HashMap<String,ProcessFlowDTO> map, boolean status){
+        String nextType = "";
+        while(!nextType.equals("Task") && !code.equals("end")) {
+            ProcessFlowDTO processFlowDTO = map.get(code);
+            if(status) {
+             code = processFlowDTO.getNextTrueCondition();
+            } else {
+             code = processFlowDTO.getNextFalseCondition();
+            }
+            nextType = map.get(code).getType();
+            if(nextType.equalsIgnoreCase("condition")) {
+                if(processFlowDTO.getConditionExpression() != null &&
+                        processFlowDTO.getConditionExpression().equalsIgnoreCase("true")) {
+                    status = true;
+                } else {
+                    status = false;
+                }
+            }
         }
-
         return code;
     }
 
@@ -143,12 +137,7 @@ public class JobService {
         String currentFlow = job.getCurrentFlow();
         String type = "";
         String nextTrueCond;
-        if (status.equals("success")) {
-            nextTrueCond = getCondition(currentFlow, map, type);
-        } else {
-            nextTrueCond = "end";
-
-        }
+        nextTrueCond = getCondition(currentFlow, map, status.equalsIgnoreCase("success"));
         job.setCurrentFlow(nextTrueCond);
 
         Job job1 = jobRepository.save(job);
