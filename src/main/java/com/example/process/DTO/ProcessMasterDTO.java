@@ -10,21 +10,21 @@ public class ProcessMasterDTO {
 
     private String processName;
 
-    private HashMap<String ,Object> process;
+    private HashMap<String ,ProcessFlowDTO> process;
 
     public ProcessMasterDTO() {
     }
 
-    public HashMap<String, Object> getProcess() {
+    public String getProcessName() {
+        return processName;
+    }
+
+    public HashMap<String, ProcessFlowDTO> getProcess() {
         return process;
     }
 
-    public void setProcess(HashMap<String, Object> process) {
+    public void setProcess(HashMap<String, ProcessFlowDTO> process) {
         this.process = process;
-    }
-
-    public String getProcessName() {
-        return processName;
     }
 
     public void setProcessName(String processName) {

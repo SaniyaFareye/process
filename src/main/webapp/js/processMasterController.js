@@ -26,13 +26,34 @@ angular.module('app')
                 $scope.choiceSet.choices.splice(z,1);
             };
 
+//            var init=function(){
+//                                 view();
+//                                 }
+//
+//                                 init();
+//
+//                                function view(){
+//                                var url="/process/all";
+//                                $http.get(url).then(function(response){
+//                                $scope.process=response.data;
+//                                  });
+//                                }
+
             $scope.submitProcess=function(processInfo){
                 for(var i=0;i<$scope.choiceSet.choices.length;i++){
+                    if($scope.choiceSet.choices[i].type=='Task'){
+                       $scope.choiceSet.choices[i].nextFalseCondition=null;
+                       $scope.choiceSet.choices[i].conditionExpression=null;
+                    }
                     processMap[$scope.choiceSet.choices[i].code]={};
                     processMap[$scope.choiceSet.choices[i].code]=$scope.choiceSet.choices[i];
 
                 }
-                    console.log(processMap);
+
+                processInfo.process=processMap;
+                    $http.post("/process/add",processInfo).then(function(response){
+                        console.log(response.data);
+                    });
             }
 
 });

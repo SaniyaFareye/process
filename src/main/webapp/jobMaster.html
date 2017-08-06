@@ -1,1 +1,114 @@
-job
+<div>
+    <div class="btn-group" role="group" >
+        <button ng-click="draft.show='view'" type="button" class="btn btn-default">View</button>
+    </div>
+
+    <div class="view" ng-if="draft.show=='view'">
+        <table class="table">
+        <thead>
+            <tr>
+            <th>Process Flow</th>
+            <th style="width:90px"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat ="processDetail in process">
+            <td>{{processDetail.processName}}</td>
+
+            <td>
+            <div>
+             <button class="btn btn-danger" ng-click="draft.show='add'; render(processDetail.processMasterID)" >Add Process </button>
+            </div>
+            </td>
+            </tr>
+        </tbody>
+        </table>
+    </div>
+
+    <div class="add process" ng-if="draft.show=='add'">
+
+        <div class="btn-group" role="group" >
+            <button  type="button"  class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add Process</button>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+
+                        <input  type="text" id="datepicker" class="form-control" data-max-date="2017-08-05"  ng-model="filter.startDate"data-date-format="yyyy-mm-dd" placeholder="From Date">
+
+            </div>
+
+            <div class="col-md-2">
+                <input  type="text" id="datepick" class="form-control" data-max-date="2017-08-05"  data-date-format="yyyy-mm-dd" placeholder="Till Date">
+
+            </div>
+            <div class="col-md-2">
+                <select  class="form-control" ng-model="currFlow"
+                        ng-options="x for x in codeList">
+                    <option value="">Current Flow</option>
+                </select>
+            </div>
+            <td>
+                <div>
+                    {{startDate}}>>
+                    <button class="btn " ng-click="search()" >Search </button>
+                </div>
+            </td>
+        </div>
+
+        <div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>CRN No</th>
+                    <th>currentFlow</th>
+                    <th>Created Date</th>
+                    <th style="width:90px"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat ="procDetail in proc">
+                    <td>{{procDetail.crnNo}}</td>
+                    <td>{{procDetail.currentFlow}}</td>
+                    <td>{{procDetail.createdDate}}</td>
+
+                    <td>
+
+                        <button ng-disabled="procDetail.currentFlow=='end'" type="button" class="btn btn-primary" ng-click="success(procDetail.crnNo)" >Success</button>
+                    </td>
+                    <td>
+                        <button ng-disabled="procDetail.currentFlow=='end'" type="button" class="btn btn-primary"  ng-click="fail(procDetail.crnNo)">Fail</button>
+
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button  type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Add process Details</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group label-floating">
+                            <label class="control-label" for="crn_no">CRN NO(unique)</label>
+                            <input id="crn_no" type="text" class="form-control" ng-model="addInfo.crnNo" required="required"/>
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="addProc(draft.processMasterId,addInfo)">Save</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
